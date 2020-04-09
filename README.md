@@ -1,8 +1,8 @@
 ![ALT](/media/images/gemm-hierarchy-with-epilogue-no-labels.png "Complete CUDA GEMM decomposition")
 
-# CUTLASS 2.0
+# CUTLASS 2.1
 
-_CUTLASS 2.0 - November 2019_
+_CUTLASS 2.1 - April 2020_
 
 CUTLASS is a collection of CUDA C++ template abstractions for implementing
 high-performance matrix-multiplication (GEMM) at all levels and scales within CUDA.
@@ -25,6 +25,14 @@ NVIDIA's Volta and Turing architectures.
 
 See the [Quick Start Guide](/media/docs/quickstart.md) to get started quickly.
 
+# What's New in CUTLASS 2.1
+
+CUTLASS 2.1 is a minor update to CUTLASS 2.0 adding:
+
+- [Planar complex GEMM kernels](/examples/10_planar_complex/planar_complex.cu) targeting Volta and Turing Tensor Cores
+- BLAS-style API to launch kernels compiled into the [CUTLASS Library](/media/docs/quickstart.md#cutlass-library)
+
+
 # What's New in CUTLASS 2.0
 
 CUTLASS 2.0 is a substantial refactoring from the previous version, intended to offer:
@@ -33,7 +41,7 @@ CUTLASS 2.0 is a substantial refactoring from the previous version, intended to 
 - Robust and durable templates that reliably span the design space
 - Encapsulated functionality that may be reusable in other contexts
 
-See the [CHANGELOG](CHANGELOG.md) for more details.
+**See the [CHANGELOG](CHANGELOG.md) for more details.**
 
 See the [functionality listing](media/docs/functionality.md) for the list of operations
 supported at each level of the execution model hierarchy.
@@ -82,7 +90,7 @@ any Maxwell-, Pascal-, Volta-, or Turing- architecture NVIDIA GPU.
 
 # Documentation
 
-CUTLASS 2.0 is described in the following documents and the accompanying
+CUTLASS 2.1 is described in the following documents and the accompanying
 [Doxygen documentation](https://nvidia.github.io/cutlass).
 
 - [Quick Start Guide](/media/docs/quickstart.md) - build and run CUTLASS
@@ -91,6 +99,7 @@ CUTLASS 2.0 is described in the following documents and the accompanying
 - [GEMM API](media/docs/gemm_api.md) - describes the CUTLASS GEMM model and C++ template concepts 
 - [Code Organization](media/docs/code_organization.md) - describes the organization and contents of the CUTLASS project
 - [Terminology](media/docs/terminology.md) - describes terms used in the code
+- [Programming Guidelines](media/docs/programming_guidelines.md) - guidelines for writing efficient modern CUDA C++
 - [Fundamental types](media/docs/fundamental_types.md) - describes basic C++ classes used in CUTLASS to represent numeric quantities and arrays
 - [Layouts](media/docs/layout.md) - describes layouts of matrices and tensors in memory
 - [Tile Iterators](media/docs/tile_iterator_concept.md) - describes C++ concepts for iterating over tiles of matrices in memory
@@ -176,7 +185,7 @@ include/                     # client applications should target this directory 
 
 ### CUTLASS SDK Examples
 
-CUTLASS SDK examples apply CUTLASS templates to implement basic computations.
+[CUTLASS SDK examples](/examples) apply CUTLASS templates to implement basic computations.
 
 ```
 examples/
@@ -197,12 +206,19 @@ examples/
   07_volta_tensorop_gemm/    # example demonstrating mixed precision GEMM using Volta Tensor Cores
 
   08_turing_tensorop_gemm/   # example demonstrating integer GEMM using Turing Tensor Cores
+
+  10_planar_complex/         # example demonstrating planar complex GEMM kernels
+
+  11_planar_complex_array/   # example demonstrating planar complex kernels with batch-specific problem sizes
 ```
 
 ### Tools
 ```
 tools/
   library/                   # CUTLASS Instance Library - contains instantiations of all supported CUTLASS templates
+    include/
+      cutlass/
+        library/
 
   profiler/                  # CUTLASS Profiler         - command-line utility for executing operations in the
                              #                            CUTLASS Library
@@ -278,7 +294,7 @@ The official list of CUTLASS developers and contributors is available here: [CON
 
 # Copyright
 
-Copyright (c) 2017-2019, NVIDIA CORPORATION.  All rights reserved.
+Copyright (c) 2017-2020, NVIDIA CORPORATION.  All rights reserved.
 
 ```
   Redistribution and use in source and binary forms, with or without modification, are permitted
